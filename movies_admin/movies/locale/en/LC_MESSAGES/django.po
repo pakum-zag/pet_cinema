@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-04 20:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: movies/apps.py:8
+msgid "movies"
+msgstr ""
+
+#: movies/models.py:10
+msgid "Creation date"
+msgstr ""
+
+#: movies/models.py:17
+msgid "Modification date"
+msgstr ""
+
+#: movies/models.py:36
+msgid "Name"
+msgstr ""
+
+#: movies/models.py:37 movies/models.py:74
+msgid "Description"
+msgstr ""
+
+#: movies/models.py:44 movies/models.py:93
+msgid "Genre"
+msgstr ""
+
+#: movies/models.py:45 movies/models.py:78
+msgid "Genres"
+msgstr ""
+
+#: movies/models.py:55
+msgid "Movie"
+msgstr ""
+
+#: movies/models.py:56
+msgid "TV show"
+msgstr ""
+
+#: movies/models.py:61
+msgid "Full name"
+msgstr ""
+
+#: movies/models.py:68 movies/models.py:104
+msgid "Actor"
+msgstr ""
+
+#: movies/models.py:69 movies/models.py:79
+msgid "Actors"
+msgstr ""
+
+#: movies/models.py:73
+msgid "Title"
+msgstr ""
+
+#: movies/models.py:75
+msgid "Release date"
+msgstr ""
+
+#: movies/models.py:76
+msgid "Rating"
+msgstr ""
+
+#: movies/models.py:77
+msgid "Film type"
+msgstr ""
+
+#: movies/models.py:87
+msgid "Film work"
+msgstr ""
+
+#: movies/models.py:88
+msgid "Film works"
+msgstr ""
+
+#: movies/models.py:92 movies/models.py:103
+msgid "Film"
+msgstr ""
+
+#: movies/models.py:98
+msgid "Film Genre"
+msgstr ""
+
+#: movies/models.py:99
+msgid "Film genres"
+msgstr ""
+
+#: movies/models.py:105
+msgid "Role"
+msgstr ""
+
+#: movies/models.py:110
+msgid "Film actor"
+msgstr ""
+
+#: movies/models.py:111
+msgid "Movie actors"
+msgstr ""
