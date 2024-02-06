@@ -2,14 +2,14 @@
 CREATE SCHEMA IF NOT EXISTS content;
 
 
-CREATE TABLE content.film_work (
+CREATE TABLE IF NOT EXISTS content.film_work (
     id uuid NOT NULL PRIMARY KEY,
     title text NOT NULL,
     description text,
     creation_date date,
     rating double precision,
     type text NOT NULL,
-    file_path text NULL,
+    file text NULL,
     created timestamp with time zone,
     modified timestamp with time zone
 );
