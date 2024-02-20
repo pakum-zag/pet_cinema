@@ -1,12 +1,10 @@
-
 CREATE SCHEMA IF NOT EXISTS content;
-
 
 CREATE TABLE IF NOT EXISTS content.film_work (
     id uuid NOT NULL PRIMARY KEY,
     title text NOT NULL,
     description text,
-    creation_date date,
+    release_date date,
     rating double precision,
     type text NOT NULL,
     file text NULL,
@@ -50,8 +48,6 @@ CREATE TABLE IF NOT EXISTS content.person_film_work (
     FOREIGN KEY (film_work_id) REFERENCES content.film_work(id)
 );
 
-
-CREATE INDEX IF NOT EXISTS film_work_creation_date_idx ON content.film_work(creation_date);
-
-CREATE UNIQUE INDEX IF NOT EXISTS film_work_person_idx ON content.person_film_work (film_work_id, person_id, role);
-CREATE UNIQUE INDEX IF NOT EXISTS genre_film_work_idx ON content.genre_film_work (genre_id, film_work_id);
+CREATE INDEX CONCURRENTLY IF NOT EXISTS film_work_release_date_idx ON content.film_work(release_date);
+CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS film_work_person_idx ON content.person_film_work (film_work_id, person_id, role);
+CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS genre_film_work_idx ON content.genre_film_work (genre_id, film_work_id);

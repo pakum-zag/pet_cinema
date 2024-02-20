@@ -1,12 +1,14 @@
-import os
+from environs import Env
+
+env = Env()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME') or 'movies_database',
-        'USER': os.environ.get('DB_USER') or 'app',
-        'PASSWORD': os.environ.get('DB_PASSWORD') or '123qwe',
-        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DB_PORT', 5432),
+        'NAME': env.str('DB_NAME', default='movies_database'),
+        'USER': env.str('DB_USER', default='app'),
+        'PASSWORD': env.str('DB_PASSWORD', default='123qwe'),
+        'HOST': env.str('DB_HOST', default='127.0.0.1'),
+        'PORT': env.int('DB_PORT', 5432),
     }
 }

@@ -66,7 +66,7 @@ class Person(UUIDMixin, TimeStampedMixin):
 class Filmwork(UUIDMixin, TimeStampedMixin):
     title = models.TextField(_('Title'))
     description = models.TextField(_('Description'), default='', blank=True)
-    creation_date = models.DateTimeField(_("Release date"), null=True)
+    release_date = models.DateTimeField(_("Release date"), null=True)
     rating = models.FloatField(_('Rating'), blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     type = models.CharField(_('Film type'), max_length=50, choices=FilmWorkType.choices)
     genres = models.ManyToManyField(Genre, verbose_name=_("Genres"), through='GenreFilmwork')
@@ -83,8 +83,8 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
 
 
 class GenreFilmwork(UUIDMixin, CreatedMixin):
-    film_work = models.ForeignKey(Filmwork, verbose_name=_("Film"), on_delete=models.CASCADE)
-    genre = models.ForeignKey(Genre, verbose_name=_("Genre"), on_delete=models.CASCADE)
+    film_work = models.ForeignKey(Filmwork, verbose_name=_("Film"), on_delete=models.PROTECT)
+    genre = models.ForeignKey(Genre, verbose_name=_("Genre"), on_delete=models.PROTECT)
 
     class Meta:
         db_table = "content\".\"genre_film_work"
@@ -94,8 +94,8 @@ class GenreFilmwork(UUIDMixin, CreatedMixin):
 
 
 class PersonFilmwork(UUIDMixin, CreatedMixin):
-    film_work = models.ForeignKey(Filmwork, verbose_name=_("Film"), on_delete=models.CASCADE)
-    person = models.ForeignKey(Person, verbose_name=_("Actor"), on_delete=models.CASCADE)
+    film_work = models.ForeignKey(Filmwork, verbose_name=_("Film"), on_delete=models.PROTECT)
+    person = models.ForeignKey(Person, verbose_name=_("Actor"), on_delete=models.PROTECT)
     role = models.TextField(_("Role"), null=True)
 
     class Meta:

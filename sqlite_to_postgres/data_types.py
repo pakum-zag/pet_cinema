@@ -1,3 +1,4 @@
+import inspect
 import uuid
 from dataclasses import dataclass
 from datetime import datetime
@@ -25,6 +26,13 @@ class GenericTable:
     def get_constrain_fields():
         return 'id'
 
+    @classmethod
+    def from_dict(cls, env):
+        return cls(**{
+            k: v for k, v in env.items()
+            if k in inspect.signature(cls).parameters
+        })
+
 
 @dataclass
 class GenericCreatedClass:
@@ -39,7 +47,7 @@ class GenericModifiedClass:
 @dataclass
 class FilmWork(GenericTable, GenericCreatedClass, GenericModifiedClass):
     title: str
-    creation_date: datetime.date
+    release_date: datetime.date
     type: FilmWorkType
     rating: float = 0.0
     description: str = ''

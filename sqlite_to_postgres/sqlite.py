@@ -9,21 +9,20 @@ def _dict_factory(cursor, row):
     """
     Парсинг данных из SQLite в виде словаря
     """
-    d = {}
-    for idx, col in enumerate(cursor.description):
-        d[col[0]] = row[idx]
-    return d
+    return {col[0]: row[idx] for idx, col in enumerate(cursor.description)}
 
 
 def _modify_parsed_row(data_row: dict) -> dict:
     """
     Модификация строки при парсинге из таблицы
     """
+    modify_data = data_row.copy()
     if data_row.get('created_at'):
-        data_row['created'] = data_row.pop('created_at')
+        modify_data['created'] = data_row['created_at']
     if data_row.get('updated_at'):
-        data_row['modified'] = data_row.pop('updated_at')
-    return data_row
+        modify_data['modified'] = data_row['updated_at']
+    modify_data['release_date'] = data_row.get('creation_date')
+    return modify_data
 
 
 def cursor_execute_query(cursor, table_name):
@@ -40,18 +39,11 @@ def load_data_from_sqlite_table(cursor, table_dataclass):
     d = []
     for item in cursor.fetchmany(CHUNK):
         if table_dataclass == FilmWork:
-            try:
-                if item.get('description') is None:
-                    item['description'] = ''
-                if item.get('rating') is None:
-                    item['rating'] = 0.0
-                item.pop('file_path')
-            except:
-                pass
+            item['description'] = item.get('description', '')
+            item['rating'] = item.get('rating', 0.0)
         elif table_dataclass == Genre:
-            if item.get('description') is None:
-                item['description'] = ''
-        d.append(table_dataclass(**_modify_parsed_row(item)))
+            item['description'] = item.get('description', '')
+        d.append(table_dataclass.from_dict(_modify_parsed_row(item)))
     return d
 
 
