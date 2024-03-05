@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  postgres:
+    build:
+      context: ./schema_design
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+  admin_panel:
+    restart: always
+    build:
+      context: ./movies_admin
+    environment:
+      - ADMIN_SECRET_KEY=${ADMIN_SECRET_KEY}
+      - ADMIN_DEBUG=${ADMIN_DEBUG}
+      - POSTGRES_DB_NAME=${POSTGRES_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+  sqlite_to_postgres:
+    restart: on-failure
+    build:
+      context: ./sqlite_to_postgres
+    environment:
+      - dbname=${POSTGRES_DB_NAME}
+      - user=${POSTGRES_USER}
+      - password=${POSTGRES_PASSWORD}
+      - host=postgres
+      - port=${POSTGRES_PORT}
+    depends_on:
+      - postgres
