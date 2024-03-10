@@ -8,8 +8,6 @@ services:
       - POSTGRES_DB=${POSTGRES_DB_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
   admin_panel:
     restart: always
     build:
@@ -24,8 +22,6 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
     depends_on:
       - postgres
-    ports:
-      - "8000:8000"
   sqlite_to_postgres:
     restart: on-failure
     build:
@@ -38,3 +34,14 @@ services:
       - port=${POSTGRES_PORT}
     depends_on:
       - postgres
+  nginx:
+    build:
+      context: nginx
+    depends_on:
+      - admin_panel
+    volumes:
+      - ./movies_admin/static:/media/static/:ro
+    environment:
+      - ADMIN_HOST=admin_panel
+    ports:
+      - "80:80"
