@@ -39,10 +39,10 @@ def load_data_from_sqlite_table(cursor, table_dataclass):
     d = []
     for item in cursor.fetchmany(CHUNK):
         if table_dataclass == FilmWork:
-            item['description'] = item.get('description', '')
-            item['rating'] = item.get('rating', 0.0)
+            item['description'] = item.get('description') or ''
+            item['rating'] = item.get('rating') or 0.0
         elif table_dataclass == Genre:
-            item['description'] = item.get('description', '')
+            item['description'] = item.get('description') or ''
         d.append(table_dataclass.from_dict(_modify_parsed_row(item)))
     return d
 

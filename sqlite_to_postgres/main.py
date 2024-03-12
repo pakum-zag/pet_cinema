@@ -7,7 +7,6 @@ from psycopg2.extras import DictCursor
 from data_types import FilmWork, Genre, Person, GenreFilmWork, PersonFilmWork
 from postgres import insert_data_to_postgres_table, PG_DSL
 from sqlite import create_sqlite_cursor, load_data_from_sqlite_table, cursor_execute_query
-from environs import Env
 
 
 @contextmanager
