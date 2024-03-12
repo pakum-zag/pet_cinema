@@ -1,3 +1,4 @@
+from enum import Enum
 
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import TextChoices
