@@ -9,7 +9,7 @@ env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = env.str("ADMIN_SECRET_KEY", default="<KEY>")
+SECRET_KEY = env.str("ADMIN_SECRET_KEY")
 
 DEBUG = env.bool("DEBUG", default=True)
 
@@ -17,7 +17,7 @@ ALLOWED_HOSTS = env.list(
     "ALLOWED_HOSTS",
     default=[
         "127.0.0.1",
-        'localhost',
+        "localhost",
     ],
 )
 SHOW_TOOLBAR_CALLBACK = True
@@ -85,10 +85,10 @@ include("components/pass_validation.py")
 include("components/internationalization.py")
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

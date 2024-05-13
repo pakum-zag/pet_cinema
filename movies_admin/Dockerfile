@@ -1,8 +1,12 @@
-FROM python:3.11
+FROM python:3.11-bullseye
 WORKDIR /opt/app
-COPY . .
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+COPY pyproject.toml pyproject.toml
 RUN pip install --upgrade pip && pip install poetry
 RUN poetry export --without-hashes -f requirements.txt --output ./requirements.txt
 RUN pip install -r ./requirements.txt
 
-ENTRYPOINT python manage.py migrate && uwsgi --module=config.wsgi --http 0.0.0.0:8000
+COPY . .
