@@ -1,0 +1,57 @@
+version: '3.9'
+services:
+  postgres:
+    build:
+      context: ./schema_design
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB_NAME}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  admin_panel:
+    restart: always
+    build:
+      context: ./movies_admin
+    environment:
+      - ADMIN_SECRET_KEY=${ADMIN_SECRET_KEY}
+      - ADMIN_DEBUG=${ADMIN_DEBUG}
+      - POSTGRES_DB_NAME=${POSTGRES_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    depends_on:
+      - postgres
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+  sqlite_to_postgres:
+    restart: on-failure
+    build:
+      context: ./sqlite_to_postgres
+    environment:
+      - dbname=${POSTGRES_DB_NAME}
+      - user=${POSTGRES_USER}
+      - password=${POSTGRES_PASSWORD}
+      - host=postgres
+      - port=${POSTGRES_PORT}
+    depends_on:
+      - postgres
+  nginx:
+    build:
+      context: nginx
+    depends_on:
+      - admin_panel
+    volumes:
+      - ./movies_admin/static:/media/static/:ro
+    environment:
+      - ADMIN_HOST=admin_panel
+    ports:
+      - "80:80"

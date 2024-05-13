@@ -17,11 +17,11 @@ def _modify_parsed_row(data_row: dict) -> dict:
     Модификация строки при парсинге из таблицы
     """
     modify_data = data_row.copy()
-    if data_row.get('created_at'):
-        modify_data['created'] = data_row['created_at']
-    if data_row.get('updated_at'):
-        modify_data['modified'] = data_row['updated_at']
-    modify_data['release_date'] = data_row.get('creation_date')
+    if data_row.get("created_at"):
+        modify_data["created"] = data_row["created_at"]
+    if data_row.get("updated_at"):
+        modify_data["modified"] = data_row["updated_at"]
+    modify_data["release_date"] = data_row.get("creation_date")
     return modify_data
 
 
@@ -39,10 +39,10 @@ def load_data_from_sqlite_table(cursor, table_dataclass):
     d = []
     for item in cursor.fetchmany(CHUNK):
         if table_dataclass == FilmWork:
-            item['description'] = item.get('description', '')
-            item['rating'] = item.get('rating', 0.0)
+            item["description"] = item.get("description") or ""
+            item["rating"] = item.get("rating") or 0.0
         elif table_dataclass == Genre:
-            item['description'] = item.get('description', '')
+            item["description"] = item.get("description") or ""
         d.append(table_dataclass.from_dict(_modify_parsed_row(item)))
     return d
 

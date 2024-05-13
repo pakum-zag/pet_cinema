@@ -3,12 +3,11 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import List, Tuple, Union
 
 
 class FilmWorkType(Enum):
-    MOVIE = 'movie'
-    TV_SHOW = 'tv_show'
+    MOVIE = "movie"
+    TV_SHOW = "tv_show"
 
     @classmethod
     def as_choices(cls):
@@ -24,14 +23,13 @@ class GenericTable:
 
     @staticmethod
     def get_constrain_fields():
-        return 'id'
+        return "id"
 
     @classmethod
     def from_dict(cls, env):
-        return cls(**{
-            k: v for k, v in env.items()
-            if k in inspect.signature(cls).parameters
-        })
+        return cls(
+            **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
+        )
 
 
 @dataclass
@@ -50,21 +48,21 @@ class FilmWork(GenericTable, GenericCreatedClass, GenericModifiedClass):
     release_date: datetime.date
     type: FilmWorkType
     rating: float = 0.0
-    description: str = ''
+    description: str = ""
 
     @staticmethod
     def get_table_name():
-        return 'film_work'
+        return "film_work"
 
 
 @dataclass
 class Genre(GenericTable, GenericCreatedClass, GenericModifiedClass):
     name: str
-    description: str = ''
+    description: str = ""
 
     @staticmethod
     def get_table_name():
-        return 'genre'
+        return "genre"
 
 
 @dataclass
@@ -74,7 +72,7 @@ class GenreFilmWork(GenericTable, GenericCreatedClass):
 
     @staticmethod
     def get_table_name():
-        return 'genre_film_work'
+        return "genre_film_work"
 
 
 @dataclass
@@ -83,7 +81,7 @@ class Person(GenericTable, GenericCreatedClass, GenericModifiedClass):
 
     @staticmethod
     def get_table_name():
-        return 'person'
+        return "person"
 
 
 @dataclass
@@ -94,8 +92,8 @@ class PersonFilmWork(GenericTable, GenericCreatedClass):
 
     @staticmethod
     def get_table_name():
-        return 'person_film_work'
+        return "person_film_work"
 
     @staticmethod
     def get_constrain_fields():
-        return 'film_work_id, person_id, role'
+        return "film_work_id, person_id, role"
